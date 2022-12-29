@@ -1,0 +1,71 @@
+*,html{
+    padding: 0px;
+    margin: 0px;
+    box-sizing: border-box;
+}
+
+header{
+    background-color: #777799;
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    padding: 0px 50px;
+    min-height: 100px;
+}
+ 
+#search-div{
+    place-self: center;
+}
+
+#logo{
+    place-self: center start;
+    text-decoration: none;
+    color: white;
+}
+
+#logo img{
+    height: 70px;
+    margin-top: 5px;
+}
+
+#profile-btn{
+    place-self: center end;
+}
+
+#profile-btn img{
+    margin-top: 5px;
+    margin-left: 15px;
+    width: 50px;
+    vertical-align: endpoint;
+}
+
+#search-form{
+    width: 500px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+
+#search-bar{
+    width: 100%;
+    padding: 10px 10px;
+}
+
+#submit-search{
+    padding: 5px 10px;
+}
+
+#login-form{
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-footer p{
+    margin-bottom: 0px;
+}
+
+form input[type="email"],
+form input[type="text"],
+form input[type="password"],
+form input[type="int"]{
+    padding: 5px 3px;
+}
