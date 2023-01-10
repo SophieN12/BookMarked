@@ -1,7 +1,13 @@
 <?php
-require('../../src/dbconnect.php');
+require('../../src/config.php');
+
 $pageId = "Home";
 $pageTitle = "Homepage";
+$alertMessages = "";
+
+if (isset($_GET['logout'])){
+    $alertMessages = "You have logged out";
+}
 
 $sql = "SELECT * FROM books";
 $stmt = $pdo->query($sql);
@@ -9,6 +15,15 @@ $books = $stmt->fetchAll();
 ?>
 
 <?php include('../layout/header.php')?>
+
+<?php if (isset($_GET['logout'])){ ?>
+    <div class="alert alert-info alert-dismissible fade show" role="alert">
+        Du är nu<strong> utloggad.</strong>
+        <button type="button" class="close alert-close-btn" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+<?php } ?>
 
 <main>
     <section id="slideshow-container">
@@ -64,7 +79,7 @@ $books = $stmt->fetchAll();
                     </a>
 
                     <form id="add-cart-form" action="../add-cart-item.php" method="POST">
-                        <input type="hidden" name="productId" value="<?= $product['id'] ?>">
+                        <input type="hidden" name="productId" value="<?= $books[$num]['id'] ?>">
                         <input type="submit" class="btn product-add-btn" name="addToCart" value="Köp">
                     </form>
                 </li>
