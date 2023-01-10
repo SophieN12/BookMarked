@@ -1,9 +1,34 @@
 <?php 
-require('../../src/dbconnect.php');
+require('../../src/config.php');
 
 if (isset($_POST["submitSearch"])){
     $searchResult =  trim($_POST['search-result']);
     header("location: ../products/products.php?search=". trim($_POST['search-result']));
+}
+
+$errorMessages = "";
+$successMessage = "";
+
+if (isset($_POST['loginBtn'])) {
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+
+    $sql = "SELECT * FROM users 
+            WHERE email = :email";
+
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindParam(':email', $email);
+    $stmt->execute();
+
+    $user = $stmt->fetch();
+
+    if ($user and $user['password'] == $password) {
+        $_SESSION['id'] = $user['id'];
+        $_SESSION['email'] = $user['email'];
+        $_SESSION['img'] = $user['img_url'];
+    } else {
+        $errorMessages = "The username or password you entered is incorrect";
+    }
 }
 ?>
 
@@ -22,7 +47,7 @@ if (isset($_POST["submitSearch"])){
 
 <body>
     <header>
-        <a href="index.php" id="logo">
+        <a href="../products/index.php" id="logo">
             <img src="../img/header-img/Logo.png" alt="" height="70px">
         </a>
 
@@ -34,8 +59,17 @@ if (isset($_POST["submitSearch"])){
         </div>
         
         <div id="profile-btn">
-            <img src="../img/header-img/cart.png" alt="">
-            <img src="../img/header-img/owl.png" data-toggle="modal" data-target="#loginModal" alt="">
+            <?php 
+                if(isset($_SESSION['email'])){ ?>
+                    <a href="../users/my-page.php">
+                        <img src="../img/<?php echo $_SESSION['img']?>">
+                    </a>
+                    <?php } else { ?>
+                        <img src="../img/header-img/owl.png" data-toggle="modal" data-target="#loginModal" alt="">
+                        <?php }
+            ?>
+
+            <?php include('../cart.php'); ?>
         </div>
 
         <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
@@ -49,19 +83,19 @@ if (isset($_POST["submitSearch"])){
                     </div>
 
                     <div class="modal-body">
-                        <div id="message"></div>
+                        <div id="loginMessages"></div>
                         <form id="login-form" method="POST">
                             <div class="form-group">
                                 <label for="email">E-post:</label>
-                                <input type="email" class="form-control" id="email">
+                                <input type="email" class="form-control" name="email" value="<?=htmlentities($email)?>">
                             </div>
                             <div class="form-group">
                                 <label for="password">Lösenord:</label>
-                                <input type="password" class="form-control" id="password">
+                                <input type="password" class="form-control" name="password">
                             </div>
 
                             <a href="" style="align-self: center">Glömt lösenord?</a>
-                            <button type="submit" class="btn btn-primary" name="submitReviewBtn">Logga in</button>
+                            <button type="submit" id="loginBtn" class="btn btn-primary" name="loginBtn">Logga in</button>
                             <div class="modal-footer" style="align-self: center; margin: 10px 0px;">
                                 <p>Inget konto? <a href="" >Skapa ett här.</a> </p>
                             </div>
@@ -76,6 +110,7 @@ if (isset($_POST["submitSearch"])){
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="../products/js/login.js"></script>
 </body>
 
 </html>
