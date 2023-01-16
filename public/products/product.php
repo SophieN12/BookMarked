@@ -1,12 +1,10 @@
 <?php 
-require('../../src/dbconnect.php');
+require('../../src/config.php');
 
 $messages="";
 
-$sql = 'SELECT * FROM books WHERE id =' . $_GET["id"];
-$stmt = $pdo-> prepare($sql);  
-$stmt -> execute();
-$book = $stmt->fetch();
+$book = $booksDbHandler -> fetchSpecificBook($_GET["id"]);
+
 $pageTitle = $book['title'] . ' - ' . $book['author'];
 
 $sql = 'SELECT reviews.rating, reviews.review_text, reviews.create_date, users.first_name, users.last_name 
@@ -18,34 +16,32 @@ $stmt-> bindParam(":id",  $_GET["id"]);
 $stmt -> execute();
 $reviews = $stmt->fetchAll();
 
-if (isset($_POST['submitReviewBtn'])){
+if (isset($_POST['submitReviewBtn']) && isset($_SESSION['id'])){
     $bookId         = $_POST['bookId'];
-    $userId         = $_POST['userId'];
+    $userId         = $_SESSION['id'];
     $rating         = trim($_POST['rating']);
     $reviewText     = trim($_POST['reviewText']);
+    
+    $sql = "INSERT INTO reviews (book, user, rating, review_text)
+    VALUES (:book, :user, :rating, :review_text)";
 
-    if (empty($rating) || empty($reviewText)){
-        echo"Hello";
+    $stmt = $pdo->prepare($sql);
+    $stmt-> bindParam(":book",  $bookId);
+    $stmt-> bindParam(":user",  $userId);
+    $stmt-> bindParam(":rating", $rating);
+    $stmt-> bindParam(":review_text", $reviewText);
+    $stmt-> execute(); 
 
-    } else {
-        $sql = "INSERT INTO reviews (book, user, rating, review_text)
-        VALUES (:book, :user, :rating, :review_text)";
+    header("Refresh:0");
+} 
 
-        $stmt = $pdo->prepare($sql);
-        $stmt-> bindParam(":book",  $bookId);
-        $stmt-> bindParam(":user",  $userId);
-        $stmt-> bindParam(":rating", $rating);
-        $stmt-> bindParam(":review_text", $reviewText);
-        $stmt-> execute(); 
-
-        header("Refresh:0");
-    }
-}?>
+?>
 <?php include("../layout/header.php")?>
-
 
 <main>
     <section id="product-section">
+
+        <div class="alert-div"></div>
         <div>
             <img src="../admin/products/<?= $book['img_url'] ?>">
         </div>
@@ -71,7 +67,11 @@ if (isset($_POST['submitReviewBtn'])){
                 ?>
             </p>
 
-            <button>Lägg i varukorgen</button>
+            <form id="add-cart-form" action="../add-cart-item.php" method="POST" onsubmit= "addToCart(); return false">
+                <input type="hidden" name="productId" value="<?= $book['id'] ?>">
+                <input type="submit" class="btn product-add-btn" name="addToCart" value="Köp">
+            </form>
+
             <button>Favorisera</button>
         </div>
 
@@ -126,27 +126,28 @@ if (isset($_POST['submitReviewBtn'])){
                     </div>
 
                     <div class="modal-body">
-                        <div id="message"></div>
-                        <form id="review-form" action="" method="POST">
+                        <div id="reviewMessages"><?=$messages?></div>
+                        <form id="review-form" method="POST">
                             <input type="hidden" name="bookId" value= <?=$book['id']?> >
-                            <div class="form-group">
-                                <label for="userId">UserID:</label>
-                                <input type="int" class="form-control" name="userId" value= <?=htmlentities($userId)?> >
+                            <input type="hidden" name="sessionId" value= <?=$_SESSION['id']?> >
+
+                            <div class="rating-div">
+                                <input type="hidden" class="form-control" id="rating-input" name="rating" value="">
+                                <i class="fa-regular fa-star fa-lg" data-star="1"></i>
+                                <i class="fa-regular fa-star fa-lg" data-star="2"></i>
+                                <i class="fa-regular fa-star fa-lg" data-star="3"></i>
+                                <i class="fa-regular fa-star fa-lg" data-star="4"></i>
+                                <i class="fa-regular fa-star fa-lg" data-star="5"></i>
                             </div>
 
                             <div class="form-group">
-                                <label for="rating">Rating:</label>
-                                <input type="int" class="form-control" name="rating" value= <?=htmlentities($rating)?> >
-                            </div>
-                            
-                            <div class="form-group">
                                 <label for="reviewText">Recension (valfritt):</label>
-                                <input type="text" class="form-control" name="reviewText" value= <?=htmlentities($reviewText)?>>
+                                <textarea class="form-control" id="floatingTextarea2" style="height: 200px" name="reviewText" placeholder="Skriv din recension här..."><?=htmlentities($reviewText)?></textarea>
                             </div>
                             
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary" name="submitReviewBtn">Submit</button>
+                                <button type="submit" class="btn btn-primary" name="submitReviewBtn" >Submit</button>
                             </div>
                         </form>
                     </div>
@@ -157,9 +158,18 @@ if (isset($_POST['submitReviewBtn'])){
 
 </main>
 
-<script src="js/product-info.js"></script>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script src="js/product-info.js"></script>
+
+<script>
+    alertDiv = document.getElementsByClassName("alert-div");
+
+    function addToCart(e){
+        e.preventDefault();
+        alertDiv.innerHTML = '<div class="alert alert-success" role="alert"> This is a success alert—check it out! </div>';
+    }
+</script>
 
 <?php include("../layout/footer.php")?>
