@@ -29,31 +29,61 @@ if (!isset($_SESSION['email'])){
         <img src="../img/<?=$loggedInUser['img_url']?>" id="user-profile-pic" alt="avatar-pic">
     </section>
 
-    <div id="manage-profile-div">
-        <a href="my-info.php">
-            <section class="profile-box">
-                <h3>Mina uppgifter</h3>
-            </section>
-        </a>
-    
-        <a href="my-favorites.php">
-            <section class="profile-box">
-                <h3>Favoriter</h3>
-            </section>
-        </a>
-        
-        <a href="my-orderhistory.php">
-            <section class="profile-box">                
-                <h3>Orderhistorik</h3>
-            </section>
-        </a>
+    <?php if ($_SESSION['id'] == 1) { ?>
+        <div id="manage-profile-div">
             
-        <a href="my-settings.php">
-            <section class="profile-box">
-                <h3>Inställningar</h3>
-            </section>
-        </a>
-    </div>
+            <a href="../admin/users/manage-users.php">
+                <section class="profile-box">
+                    <h3>Hantera användare</h3>
+                </section>
+            </a>
+            <a href="../admin/products/manage-products.php">
+                <section class="profile-box">
+                    <h3>Hantera produkter</h3>
+                </section>
+            </a>
+            
+            <a href="../admin/orders/manage-orders.php">
+                <section class="profile-box">
+                    <h3>Hantera ordrar</h3>
+                </section>
+            </a>
+
+            <a href="my-info.php">
+                <section class="profile-box">
+                    <h3>Mina uppgifter</h3>
+                </section>
+            </a>
+        </div>
+
+    <?php } else { ?> 
+        <div id="manage-profile-div">
+            <a href="my-info.php">
+                <section class="profile-box">
+                    <h3>Mina uppgifter</h3>
+                </section>
+            </a>
+        
+            <a href="my-favorites.php">
+                <section class="profile-box">
+                    <h3>Favoriter</h3>
+                </section>
+            </a>
+            
+            <a href="my-orderhistory.php">
+                <section class="profile-box">                
+                    <h3>Orderhistorik</h3>
+                </section>
+            </a>
+                
+            <a href="my-settings.php">
+                <section class="profile-box">
+                    <h3>Inställningar</h3>
+                </section>
+            </a>
+        </div>
+    <?php } ?>
+
 </main>
 
 <?php if (isset($_SESSION['email'])) { ?>
