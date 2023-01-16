@@ -6,7 +6,7 @@ if (!isset($_SESSION['cartItems'])) {
   $cartItemCount = count($_SESSION['cartItems']);
   $cartTotalSum = 0;
   $itemsCount = 0;
-  foreach ($_SESSION['cartItems'] as $cartId => $cartItem) {
+  foreach ($_SESSION['cartItems'] as $productId => $cartItem) {
     $cartTotalSum += $cartItem['price'] * $cartItem['quantity'];
     $itemsCount += $cartItem['quantity']; 
   }
@@ -16,20 +16,16 @@ if (!isset($_SESSION['cartItems'])) {
   <img id="shoppingcart" src="../img/header-img/cart.png" alt="shoppingcart icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
   <span class='badge badge-danger' id='cartCount'> <?=$itemsCount ?> </span>
   <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-        <?php foreach($_SESSION['cartItems'] as $cartId => $cartItem): ?>
+        <?php foreach($_SESSION['cartItems'] as $productId => $cartItem): ?>
             <div class="cart-detail row">
                 <img src= <?php echo "../admin/products/" . $cartItem['img_url'];?> width="100">
                 <div class="cart-detail-product">
-                    <p><?=$cartItem['title']?></p>
+                    <a href="product.php?id=<?=$productId?>"><?=$cartItem['title']?></a>
                     <span class="cart-price"><?=$cartItem['price']?> SEK</span>
-                    <span class="cart-quantity">Antal: <?=$cartItem['quantity']?></span>
-                    <form class="update-cart-form" action="../update-cart-item.php" method="POST">
-                        <input type="hidden" name="cartId" value="<?= $cartId ?>">
-                        <input type="number" name="quantity" value="<?= $cartItem['quantity'] ?>" min="0">
-                    </form>
+                    <span class="cart-quantity">Quantity: <?=$cartItem['quantity']?></span>                 
 
                     <form action="../delete-cart-item.php" method="POST">
-                        <input type="hidden" name="cartId" value="<?= $cartId ?>">
+                        <input type="hidden" name="productId" value="<?= $productId ?>">
                             <button type="submit" class="btn">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
                                     <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
@@ -57,3 +53,5 @@ if (!isset($_SESSION['cartItems'])) {
     </div>
   </div>
 </div>
+
+</script>

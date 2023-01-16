@@ -5,8 +5,8 @@ require('../src/config.php');
 // print_r($_POST);
 // echo "</pre>";
 
-if (isset($_POST['cartId']) && isset($_SESSION['cartItems'][$_POST['cartId']])) {
-    unset($_SESSION['cartItems'][$_POST['cartId']]);
+if (isset($_POST['productId']) && isset($_SESSION['cartItems'][$_POST['productId']])) {
+    unset($_SESSION['cartItems'][$_POST['productId']]);
 }
 
 if (!empty($_SERVER['HTTP_REFERER']))

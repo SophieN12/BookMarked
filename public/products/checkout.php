@@ -1,8 +1,7 @@
 <?php
 require('../../src/config.php');
 $pageTitle = 'Checkout';
-require('../../src/app/UsersDbHandler.php');
-$usersDbHandler = new UsersDbHandler($pdo);
+
 
 if(isset($_SESSION['email'])){
     $activeUser = $usersDbHandler-> fetchUserByEmail($_SESSION['email']);
@@ -14,11 +13,11 @@ if(isset($_SESSION['email'])){
 <body>
     <div class="container">
         <h1>Checkout</h1>
-       
+        
         <div class="inner-container">
             <section class="checkout-item-list">
                 <ul>
-                    <?php foreach ($_SESSION['cartItems'] as $cartId => $cartItem) : ?>
+                    <?php foreach ($_SESSION['cartItems'] as $productId => $cartItem) : ?>
                         <li>
                             <article class="checkout-item-module">
                                 <img src="../admin/products/<?= $cartItem['img_url'] ?>" width="80">
@@ -28,12 +27,12 @@ if(isset($_SESSION['email'])){
                                 </div>
 
                                 <form class="update-cart-form" action="../update-cart-item.php" method="POST">
-                                    <input type="number" name="cartId" value="<?= $cartId ?>">
+                                    <input type="hidden" name="productId" value="<?= $productId ?>">
                                     <input type="number" name="quantity" value="<?= $cartItem['quantity'] ?>" min="0">
                                 </form>
 
                                 <form action="../delete-cart-item.php" method="POST">
-                                    <input type="hidden" name="cartId" value="<?= $cartId ?>">
+                                    <input type="hidden" name="productId" value="<?= $productId ?>">
 
                                     <button type="submit" class="btn">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
@@ -57,7 +56,13 @@ if(isset($_SESSION['email'])){
 
                 <hr>
 
-                <form action="../create-order.php" method="POST">
+                <?php if (isset($_GET['infoRequired'])){ ?>
+                    <div class="alert alert-danger" role="alert" style="margin-bottom:30px">
+                        Var vänligen och fyll i alla fält.
+                    </div>
+                <?php } ?>
+
+                <form id="create-order-form" action="../create-order.php" method="POST">
                     <input type="hidden" name="cartTotalSum" value="<?= $cartTotalSum ?>">
                     <div class="form-row">
                         <div class="form-group col-md-6">
@@ -69,7 +74,6 @@ if(isset($_SESSION['email'])){
                             <input type="text" class="form-control" name="lname" value="<?=htmlentities($activeUser['last_name'])?>">
                         </div>
                     </div>
-
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="input-email">E-post:</label>
@@ -103,16 +107,9 @@ if(isset($_SESSION['email'])){
                             <input type="text" class="form-control" name="phone" value="<?=htmlentities($activeUser['phone'])?>">
                         </div>
                     </div>
-                    <div class="form-group">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="formCheck">
-                            <label class="form-check-label" for="formCheck">
-                                Jag godkänner villkoren...
-                            </label>
-                        </div>
-                    </div>
+        
                     <div class="checkout-button-submit">
-                        <button type="submit" name="createOrderBtn" class="btn btn-info btn-checkout">Complete purchase</button>
+                        <button type="submit" name="createOrderBtn" class="btn btn-info btn-checkout">Slutför order</button>
                     </div>
                 </form>
             </section>

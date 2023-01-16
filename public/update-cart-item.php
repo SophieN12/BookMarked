@@ -1,10 +1,10 @@
 <?php
 require('../src/config.php');
 
-if (isset($_POST['cartId']) 
+if (isset($_POST['productId']) 
     && !empty($_POST['quantity']) 
-    && isset($_SESSION['cartItems'][$_POST['cartId']])) {
-    $_SESSION['cartItems'][$_POST['cartId']]['quantity'] = $_POST['quantity'];
+    && isset($_SESSION['cartItems'][$_POST['productId']])) {
+    $_SESSION['cartItems'][$_POST['productId']]['quantity'] = $_POST['quantity'];
 }
 
 if (!empty($_SERVER['HTTP_REFERER']))
