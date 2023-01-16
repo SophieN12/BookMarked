@@ -19,18 +19,46 @@ productInfoBtn.onclick = function() {
     }
 }
 
-const writeReviewBtn=document.getElementById("write-review-btn");
-const writeReviewDiv=document.getElementsByClassName("write-review-div");
+const writeReviewBtn = document.getElementById("write-review-btn");
+const writeReviewDiv = document.getElementsByClassName("write-review-div");
 
 let inputFields = document.querySelectorAll("#review-form input");
-const messageDiv = document.getElementById("message");
+const reviewMessageDiv = document.getElementById("reviewMessages");
 
 const submitBtn = document.querySelector(".modal-footer .btn-primary");
 submitBtn.addEventListener("click", function(e){
-    if (inputFields[2].value == "" || inputFields[3].value == ""){
+    if (inputFields[1].value == "") {
         e.preventDefault();
-        messageDiv.innerHTML += '<div class="alert alert-danger" role="alert"> Please fill in all the necessary fields!</div>';
+        reviewMessageDiv.innerHTML = '<div class="alert alert-danger" role="alert"> Du måste vara inloggad för att skriva en recension.</div>';
     }
+    else if (inputFields[2].value == "" || inputFields[3].value == ""){
+        e.preventDefault();
+        reviewMessageDiv.innerHTML = '<div class="alert alert-danger" role="alert"> Please fill in all the necessary fields!</div>';
+    } 
 })
 
+const ratingStars = [...document.getElementsByClassName("fa-star")];
 
+function executeRating(stars) {
+  const starClassActive = "fa-solid fa-star checked fa-lg";
+  const starClassInactive = "fa-regular fa-star fa-lg";
+  const starsLength = stars.length;
+
+  let i;
+
+  stars.map((star) => {
+    star.onclick = () => {
+      i = stars.indexOf(star);
+
+      let value = parseInt(star.getAttribute("data-star"));
+      document.getElementById("rating-input").value = value;
+
+      if (star.className===starClassInactive) {
+        for (i; i >= 0; --i) stars[i].className = starClassActive;
+      } else {
+        for (i; i < starsLength; ++i) stars[i].className = starClassInactive;
+      }
+    };
+  });
+}
+executeRating(ratingStars);
