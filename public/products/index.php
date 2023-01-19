@@ -1,32 +1,15 @@
 <?php
 require('../../src/config.php');
 
-$pageId = "Home";
 $pageTitle = "Homepage";
-$alertMessages = "";
 
-if (isset($_GET['logout'])){
-    $alertMessages = "You have logged out";
-}
-
-$sql = "SELECT * FROM books";
-$stmt = $pdo->query($sql);
-$books = $stmt->fetchAll();
+$books = $booksDbHandler -> fetchAllBooks();
 ?>
 
 <?php include('../layout/header.php')?>
 
-<?php if (isset($_GET['logout'])){ ?>
-    <div class="alert alert-info alert-dismissible fade show" role="alert">
-        Du är nu<strong> utloggad.</strong>
-        <button type="button" class="close alert-close-btn" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-<?php } ?>
-
 <main>
-    <section id="slideshow-container">
+    <section id="carousel-container">
         <div class="mySlides fade-slide">
             <img src="../img/CTA-1.png" style="width:100%">
         </div> 
@@ -58,13 +41,13 @@ $books = $stmt->fetchAll();
             <a href="products.php?category=thriller">Thriller </a>
             <a href="products.php?category=fantasy">Fantasy </a>
             <a href="products.php?category=science fiction">Science Fiction </a>
-            <a href="">Barn & Ungdom</a>
+            <a href="products.php?category=barn & ungdom">Barn & Ungdom</a>
         </nav>
     </section>
 
     <section id="trending-books-section">
         <h2>Trendande böcker</h2>
-        <ul id="product-slideshow">
+        <ul id="products-display">
             <?php 
             for($num = 0; $num < 8; $num++) {?>
                 <li class="book-card card">
@@ -73,9 +56,8 @@ $books = $stmt->fetchAll();
                         <div class="card-info">
                             <h3><?= htmlentities($books[$num]['title']) ?></h3>
                             <p><?= htmlentities($books[$num]['author']) ?></p>
-                            <b
-                            ><?= htmlentities($books[$num]['price']) ?> SEK</b>
                         </div>
+                        <b class="card-price-sm"><?= htmlentities($books[$num]['price'])?>:-</b>
                     </a>
 
                     <form id="add-cart-form" action="../add-cart-item.php" method="POST">
@@ -100,14 +82,20 @@ $books = $stmt->fetchAll();
     <section id="categories-section">
         <h2>Våra mest populära kategorier</h2>
         <div class="boxes-div">
-            <a href="products.php?category=skönlitteratur">Skönlitteratur</a>
-            <a href="products.php?category=romantik">Romantik</a>
-            <a href="products.php?category=deckare">Deckare </a>
+            <a href="products.php?category=skönlitteratur">
+                <p>Skönlitteratur</p>
+            </a>
+            <a href="products.php?category=romantik">
+                <p>Romantik</p>
+            </a>
+            <a href="products.php?category=deckare">
+                <p>Deckare</p>
+            </a>
         </div>
     </section>
 
     <section id="TOP10-section"->
-        <h2>This month TOP 10</h2>
+        <h2>Månadens topp 10</h2>
         <div class="top10-list">
             <?php 
             $num = 0;
@@ -117,9 +105,9 @@ $books = $stmt->fetchAll();
                     <img src="../admin/products/<?= $books[$num]['img_url'] ?>">
                     <div>
                         <a href="product.php?id=<?= $books[$num]['id'] ?>">
-                            <h4><?=$books[$num]['title'] ?></h4>
+                            <h5><?=$books[$num]['title'] ?></h5>
                         </a>
-                        <p>Författare: <b><?= htmlentities($books[$num]['author']) ?></b></p>
+                        <p><?= htmlentities($books[$num]['author']) ?></p>
                         <p><?= htmlentities($books[$num]['price']) ?> SEK</p>
                     </div>
                 </li>
@@ -131,7 +119,8 @@ $books = $stmt->fetchAll();
         <img src="../img/OurServices.png" alt="">
     </section>
 
-    <script src="js/slideshow.js"></script>
+
+    <script src="js/carousel.js"></script>
 </main>
 
 <?php include('../layout/footer.php')?>

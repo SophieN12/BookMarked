@@ -1,9 +1,7 @@
 <?php 
-require('../../src/dbconnect.php');
-$pageId = "Products";
+require('../../src/config.php');
 $pageTitle = "Böcker";
-$pageHeader ="";
-
+$pageHeader = "";
 
 if (isset($_POST["submitSearch"]) or $_GET["search"]){
     if (isset($_POST["submitSearch"])){
@@ -11,11 +9,11 @@ if (isset($_POST["submitSearch"]) or $_GET["search"]){
     } else {
         $searchResult = ($_GET['search']);
     }
+
     $sql = "
         SELECT * FROM books 
         WHERE title like :search 
-        OR author LIKE :search
-    ";
+        OR author LIKE :search ";
 
     $stmt = $pdo->prepare($sql);
     $stmt->bindValue(':search', '%' . $searchResult .'%');
@@ -89,6 +87,29 @@ $books = $stmt->fetchAll();
 
 <?php include("../layout/header.php")?>
 
+
+<section id="secondary-menu" style="background-color:#60607d;margin-bottom:30px;">
+    <nav>
+        <a href="products.php">Alla</a>
+        <a href="products.php?category=skönlitteratur">Skönlitteratur</a>
+        <a href="products.php?category=romantik">Romantik</a>
+        <a href="products.php?category=deckare">Deckare </a>
+        <a href="products.php?category=thriller">Thriller </a>
+        <a href="products.php?category=fantasy">Fantasy </a>
+        <a href="products.php?category=science fiction">Science Fiction </a>
+        <a href="products.php?category=barn & ungdom">Barn & Ungdom</a>
+    </nav>
+</section>
+
+<?php if (isset($_GET['category']) || isset($_GET['language']) || isset($_GET['sortBy'])){ ?>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="products.php">Böcker</a></li>
+                <li class="breadcrumb-item active" aria-current="page"><?=$pageHeader?></li>
+            </ol>
+        </nav>
+<?php }?>
+
 <h1><?= $pageHeader ?></h1>
 
 <div id="filter-menu">
@@ -143,10 +164,9 @@ $books = $stmt->fetchAll();
             <div class="card-info">
                 <h3><?= $title?></h3>
                 <p><?= $author ?></p>
-                <p><?= $price ?> SEK</p>
             </div>
+            <b class="card-price"><?= $price ?>:-</b>
         </a>
-        
         <form id="add-cart-form" action="../add-cart-item.php" method="POST">
             <input type="hidden" name="productId" value="<?= $id ?>">
             <input type="submit" class="btn product-add-btn" name="addToCart" value="Köp">
@@ -156,7 +176,7 @@ $books = $stmt->fetchAll();
 </main>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
-<!-- <script src="js/products.js"></script> -->
+<script src="js/carousel.js"></script>
 
 
 <?php include("../layout/footer.php")?>

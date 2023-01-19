@@ -37,51 +37,70 @@ if (isset($_POST['submitReviewBtn']) && isset($_SESSION['id'])){
 
 ?>
 <?php include("../layout/header.php")?>
+<section id="secondary-menu" style="background-color:#60607d;margin-bottom:30px;">
+    <nav>
+        <a href="products.php">Alla</a>
+        <a href="products.php?category=skönlitteratur">Skönlitteratur</a>
+        <a href="products.php?category=romantik">Romantik</a>
+        <a href="products.php?category=deckare">Deckare </a>
+        <a href="products.php?category=thriller">Thriller </a>
+        <a href="products.php?category=fantasy">Fantasy </a>
+        <a href="products.php?category=science fiction">Science Fiction </a>
+        <a href="products.php?category=barn & ungdom">Barn & Ungdom</a>
+    </nav>
+</section>
 
 <main>
-    <section id="product-section">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="products.php">Böcker</a></li>
+            <li class="breadcrumb-item"><a href="products.php?category=Romantik">Romantik</a></li>
+            <li class="breadcrumb-item active" aria-current="page"><?=$book['title']?></li>
+        </ol>
+    </nav>
 
-        <div class="alert-div"></div>
+    <section id="product-section">
         <div>
             <img src="../admin/products/<?= $book['img_url'] ?>">
         </div>
-        <div>
+        <div id="product-div">
+            <b class='price'> <?= $book["price"]; ?> SEK</b>
             <h3><?= $book["title"]; ?></h3>
-            <h4><?= $book["author"]; ?></h4>
+            <h6>Av <a href="products.php?author=<?=$book["author"]?>"><?=$book["author"]?></a></h6>
             <p> <?= $book["category"]; ?> </p>
-            <p> <?= $book["price"]; ?> SEK</p>
-            <p>
+            <br>
+            <p style="line-height: 1.7em; ">
                 <?php
                         $string = strip_tags($book["description"]);
-                        if (strlen($string) > 200) {
+                        if (strlen($string) > 300) {
                         
                             // truncate string
-                            $stringCut = substr($string, 0, 200);
+                            $stringCut = substr($string, 0, 300);
                             $endPoint = strrpos($stringCut, ' ');
                         
                             //if the string doesn't contain any space then it will cut without word basis.
                             $string = $endPoint? substr($stringCut, 0, $endPoint) : substr($stringCut, 0);
-                            $string .= '... <a href="#product-info" fade>Read More</a>';
+                            $string .= '... <a href="#product-info" fade>Read more</a>';
                         } 
                         echo $string;
                 ?>
             </p>
+            <p style="float:right; margin-top: 10px;"><b>Leveranstid: </b>3-5 arbetsdagar</p>
 
             <form id="add-cart-form" action="../add-cart-item.php" method="POST" onsubmit= "addToCart(); return false">
                 <input type="hidden" name="productId" value="<?= $book['id'] ?>">
-                <input type="submit" class="btn product-add-btn" name="addToCart" value="Köp">
+                <button type="submit" class="btn product-add-btn" name="addToCart"><i class="fa-solid fa-bag-shopping"></i>&nbsp; &nbsp; Lägg till i varukorg</button>
             </form>
-
-            <button>Favorisera</button>
         </div>
-
     </section>
 
     <section id="product-info">
-        <button id="desc-btn" class="active-link">Beskrivning</button>
-        <button id="info-btn">Produktinfo</button>
+        <div class="toggle-btn-div">
+            <button id="desc-btn" class="active-link">Beskrivning</button>
+            <button id="info-btn">Produktinfo</button>
+        </div>
 
-        <div>
+        <div class="product-info">
             <div class="info-box show-box" style="width: 700px; overflow:auto">
                 <pre><?=$book["description"];?></pre>   
             </div>
@@ -94,9 +113,9 @@ if (isset($_POST['submitReviewBtn']) && isset($_SESSION['id'])){
                 <p>Antal sidor: <?= $book["pages"]; ?> </p>
                 <p>ISBN: 1234567890123456789</p>
             </div>
-
         </div>
     </section>
+
 
     <section id="reviews-section">
         <h3>Recensioner</h3>
@@ -131,7 +150,7 @@ if (isset($_POST['submitReviewBtn']) && isset($_SESSION['id'])){
                             <input type="hidden" name="bookId" value= <?=$book['id']?> >
                             <input type="hidden" name="sessionId" value= <?=$_SESSION['id']?> >
 
-                            <div class="rating-div">
+                            <div class="rating-div mb-3 mt-3">
                                 <input type="hidden" class="form-control" id="rating-input" name="rating" value="">
                                 <i class="fa-regular fa-star fa-lg" data-star="1"></i>
                                 <i class="fa-regular fa-star fa-lg" data-star="2"></i>
@@ -145,7 +164,7 @@ if (isset($_POST['submitReviewBtn']) && isset($_SESSION['id'])){
                                 <textarea class="form-control" id="floatingTextarea2" style="height: 200px" name="reviewText" placeholder="Skriv din recension här..."><?=htmlentities($reviewText)?></textarea>
                             </div>
                             
-                            <div class="modal-footer">
+                            <div class="modal-footer py-0">
                                 <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Close</button>
                                 <button type="submit" class="btn btn-primary" name="submitReviewBtn" >Submit</button>
                             </div>
@@ -161,7 +180,7 @@ if (isset($_POST['submitReviewBtn']) && isset($_SESSION['id'])){
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-<script src="js/product-info.js"></script>
+<script src="js/product.js"></script>
 
 <script>
     alertDiv = document.getElementsByClassName("alert-div");
