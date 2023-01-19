@@ -1,8 +1,11 @@
-*,html{
+@import "general.css";
+
+/* *,html{
     padding: 0px;
     margin: 0px;
     box-sizing: border-box;
-}
+    scroll-behavior: smooth;
+} */
 
 header{
     background-color: #777799;
@@ -29,6 +32,9 @@ header{
 
 #profile-btn{
     place-self: center end;
+    display: flex;
+    flex-direction: row;
+    row-gap: 5px;
 }
 
 #profile-btn img{
@@ -68,4 +74,71 @@ form input[type="text"],
 form input[type="password"],
 form input[type="int"]{
     padding: 5px 3px;
+}
+
+#cartCount {
+    font-size: 15px;
+    background: #d83535;
+    color: #fff;
+    padding: 3px 7px;
+    vertical-align: top;
+    margin-left: -18px; 
+    margin-top: 5px; 
+    border-radius: 10px;
+}
+
+#cart-dropdown {
+    min-width: 400px;
+}
+
+.dropdown {
+    display: inline-block;
+}
+
+.cart-detail {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+    margin-bottom: 15px;
+    margin-left: -10px;
+}
+.cart-detail a{
+    color: var(--black);
+    font-weight: 600;
+}
+
+.cart-price{
+    color: var(--hover-color);
+}
+
+.cart-detail-product{
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+}
+.cart-detail form {
+    align-self: center;
+}
+
+.total-section {
+    display: flex;
+    justify-content: space-between;
+    margin: 12px 30px;
+}
+.total-section p{
+    margin-bottom: 0;
+}
+.btn-checkout {
+    width: 75%;
+    background-color: var(--main-color);
+    border: none;
+    border-radius: 5px;
+    color: var(--white);
+    text-align: center;
+    text-decoration: none;
+    margin: 10px 0px;
+}
+.btn-checkout:hover{
+    color: var(--white);
+    background-color: var(--hover-color);
 }
