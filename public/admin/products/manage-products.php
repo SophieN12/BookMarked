@@ -58,11 +58,11 @@
         </button>
     </a>
     
-    <h1>Manage products</h1>
+    <h1>Hantera produkter</h1>
     
     <div id="messages"></div>
 
-    <a href="add-product.php" class="add-link">Add new book +</a>
+    <a href="add-product.php" class="add-link">Lägg till en ny produkt+</a>
 
     <form id="search-form" class="d-flex" role="search" method="post" >
         <select class="form-select w-25" name="searchBy">
@@ -71,7 +71,7 @@
             <option value="author">Författare</option>
             <option value="id">ID</option>
         </select>
-        <input class="form-control me-2" id="search-bar" name="search-result" type="search" placeholder="Sök..." aria-label="Search">
+        <input class="form-control me-2" id="search-bar" name="search-result" type="search" placeholder="Sök produkt..." aria-label="Search">
         <input type="submit" class="btn btn-primary px-4" id="search-submit" name="searchSubmitBtn" value="Sök">
     </form>
 

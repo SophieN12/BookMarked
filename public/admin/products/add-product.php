@@ -132,7 +132,7 @@
                 </div> 
 
                 <div class="form-floating mb-3">
-                    <select class="form-select pt-2" aria-label="Default select example" name="category" placeholder="Kategori">
+                    <select class="form-select pt-2" aria-label="Default select example" name="category" placeholder="Kategori" multiple>
                         <option value="" disabled selected hidden>Kategori</option>
                         <option value="Romantik">Romantik</option>
                         <option value="Science Fiction">Science Fiction</option>

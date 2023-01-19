@@ -26,12 +26,12 @@
         </button>
     </a>
     
-    <h1>Manage orders</h1>
+    <h1>Hantera ordrar</h1>
 
     <div id="messages"></div>
 
     <form id="search-form" class="d-flex" role="search" method="post" >
-        <input class="form-control me-2" id="search-bar" name="search-result" type="search" placeholder="Search by id..." aria-label="Search">
+        <input class="form-control me-2" id="search-bar" name="search-result" type="search" placeholder="Sök efter id..." aria-label="Search">
         <input type="submit" class="btn btn-primary px-4" id="search-submit" name="searchOrderBtn" value="Sök">
     </form>
 

@@ -11,7 +11,6 @@ loginButton.addEventListener("click", function(e){
 
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
-let closeAlertButton = document.getElementsByClassName('alert-close-btn');
 
 const registerBtn = document.getElementById("createAccountBtn");
 const registerFields = document.querySelectorAll("#create-account-form input");
@@ -42,3 +41,6 @@ function resetParams() {
     loginMessages.innerHTML = '';
     registerMessages.innerHTML = '';
 }
+
+let closeAlertButton = document.getElementsByClassName('alert-close-btn');
+closeAlertButton[0].addEventListener("click", resetParams);

@@ -41,7 +41,12 @@ if (isset($_POST['delete-account'])){
     </section>
 
     <?php if ($_SESSION['id'] == 1) { ?>
-        <div id="manage-profile-div">
+        <div id="manage-admin-div">
+            <a href="my-info.php">
+                <section class="profile-box">
+                    <h3>Mina uppgifter</h3>
+                </section>
+            </a>
             
             <a href="../admin/users/manage-users.php">
                 <section class="profile-box">
@@ -59,12 +64,6 @@ if (isset($_POST['delete-account'])){
                     <h3>Hantera ordrar</h3>
                 </section>
             </a>
-
-            <a href="my-info.php">
-                <section class="profile-box">
-                    <h3>Mina uppgifter</h3>
-                </section>
-            </a>
         </div>
 
     <?php } else { ?> 
@@ -80,12 +79,11 @@ if (isset($_POST['delete-account'])){
                     <h3>Orderhistorik</h3>
                 </section>
             </a>
-                
-            <form id="delete-form" method="POST">
-                <input type="hidden" name="delete-account">
-            </form>
-            <button id="deleteAccBtn" onclick="confirmAction()">RADERA MITT KONTO &nbsp;<i class="fa-solid fa-trash-can"></i></button>
         </div>
+        <form id="delete-form" method="POST">
+            <input type="hidden" name="delete-account">
+        </form>
+        <button id="deleteAccBtn" onclick="confirmAction()">RADERA MITT KONTO &nbsp;<i class="fa-solid fa-trash-can"></i></button>
     <?php } ?>
 </main>
 

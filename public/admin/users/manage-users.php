@@ -71,11 +71,11 @@
         </button>
     </a>
 
-    <h1>Manage users</h1>
+    <h1>Hantera användare</h1>
 
     <div id="messages"></div>
 
-    <a href="add-user.php" class="add-link">Add new user +</a>
+    <a href="add-user.php" class="add-link">Lägg till ny användare+</a>
 
     <form id="search-form" class="d-flex" role="search" method="post" >
         <select class="form-select w-25" name="searchBy">
@@ -86,7 +86,7 @@
             <option value="phone">Phone</option>
         </select>
 
-        <input class="form-control me-2" id="search-bar" name="search-result" type="search" placeholder="Search..." aria-label="Search">
+        <input class="form-control me-2" id="search-bar" name="search-result" type="search" placeholder="Sök användare..." aria-label="Search">
         <input type="submit" class="btn btn-primary px-4" id="search-submit" name="searchUserBtn" value="Sök">
     </form>
 
