@@ -5,6 +5,7 @@ $message =  "";
 
 if (isset($_GET['orderId'])) {
     $ordersDbHandler -> deleteOrder($_GET['orderId']);
+    $ordersDbHandler -> deleteOrderItems($_GET['orderId']);
     $message = "You have succesfully deleted order with ID: " . $_GET['orderId'];
     $status = true;
 

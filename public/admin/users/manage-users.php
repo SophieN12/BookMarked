@@ -63,16 +63,23 @@
 
 <?php include('../../layout/admin-header.php')?>
 
-<main class= "manage-users-container">
+<main class= "manage-container">
+    
+    <a href="../../users/my-page.php" style="color:white; text-decoration:none">
+        <button class="btn btn-secondary px-4 mt-3 mb-3"><i class="fa-solid fa-arrow-left">
+            </i>&nbsp; Tillbaka till mina sidor 
+        </button>
+    </a>
+
     <h1>Manage users</h1>
 
     <div id="messages"></div>
 
-    <a href="add-user.php">Add new user +</a>
+    <a href="add-user.php" class="add-link">Add new user +</a>
 
     <form id="search-form" class="d-flex" role="search" method="post" >
-        <select class="form-select" name="searchBy">
-            <option value="" selected hidden>Search by:</option>
+        <select class="form-select w-25" name="searchBy">
+            <option value="" selected hidden>Sök efter:</option>
             <option value="name">Name</option>
             <option value="id">ID</option>
             <option value="email">Email</option>
@@ -80,7 +87,7 @@
         </select>
 
         <input class="form-control me-2" id="search-bar" name="search-result" type="search" placeholder="Search..." aria-label="Search">
-        <input type="submit" class="btn" id="search-submit" name="searchUserBtn" >
+        <input type="submit" class="btn btn-primary px-4" id="search-submit" name="searchUserBtn" value="Sök">
     </form>
 
     <table id="users-tbl">

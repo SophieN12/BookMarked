@@ -1,0 +1,56 @@
+@import "../../css/general.css";
+
+.manage-container{
+    width: 80%;
+    margin: 0 auto;
+} 
+
+#books-tbl,
+#users-tbl{
+    width: 100%;
+}
+
+th, td{
+    border: 1px solid var(--border-color);
+    padding: 10px;
+}
+
+.remove-p {
+    padding: 0;
+    margin: 0 12px;
+}
+
+/* För att ta bort margin under alla alerts vid empty/wrong inputs */
+ul {
+    margin-bottom: 0px; 
+}
+
+table {
+    margin: 30px 0 50px;
+}
+
+.orders-container {
+    width: 60%;
+}
+
+#orders-tbl {
+    width: 100%;
+}
+.add-link{
+    display: block;
+    margin-bottom: 5px;
+}
+h2{
+    text-align: center;
+}
+.product-img {
+    display: block;
+    margin: 0 auto;
+    width: auto;
+    height: 50%;
+}
+
+.placeholder{
+    width: 60%;
+    height: auto;
+}

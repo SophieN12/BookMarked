@@ -89,24 +89,13 @@
     }    
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> <?= $pageTitle ?></title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../css/products.css"/>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-</head>
-<body>
+<?php include('../../layout/admin-header.php')?>
 
-    <div class="container mt-3">
-        <h1 class="center" >Add new product</h1>
+    <div class="container w-50 mt-5 mb-5">
+        <h2>Add new product</h2>
         <br>
 
-        <img src="product-images/placeholder.png" class="mb-3 product-img-form"height="300px">
+        <img src="product-images/placeholder.png" class="mb-3 product-img placeholder"height="300px">
         <?= $message ?>
 
         <div class="form-background">
@@ -150,6 +139,7 @@
                         <option value="Skönhetslitteratur">Skönhetslitteratur</option>
                         <option value="Thriller">Thriller</option>
                         <option value="Deckare">Deckare</option>
+                        <option value="Barn & Ungdom">Barn & Ungdom</option>
                     </select>
                 </div>
 
@@ -165,9 +155,9 @@
                 </div>
         </div>
                 <div class="d-grid gap-3 col-6 mx-auto mt-4">
-                    <input type="submit" class="btn" name="addProductBtn" value="Add">
+                    <input type="submit" class="btn btn-primary" name="addProductBtn" value="Lägg till">
 
-                    <a href="manage-products.php" class="btn btn-secondary cancel-btn">Cancel</a>
+                    <a href="manage-products.php" class="btn btn-secondary cancel-btn">Avbrryt</a>
             </form>
 
         </div>

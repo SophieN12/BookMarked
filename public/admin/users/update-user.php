@@ -44,8 +44,8 @@ if (isset($_POST['updateUser'])) {
 
 <?php include('../../layout/admin-header.php')?>
 
-    <div class="container mt-3">
-        <h1 class="center">Update user</h1>
+    <div class="container mx-auto w-50 mt-5 mb-5">
+        <h2 class="center">Update user</h2>
         <br>
 
         <?= $message ?>
@@ -96,9 +96,9 @@ if (isset($_POST['updateUser'])) {
             </div>
 
             <div class="d-grid gap-3 col-6 mx-auto mt-4 ">
-                <input type="submit" class="btn" name="updateUser" value="Update">
+                <input type="submit" class="btn btn-primary" name="updateUser" value="Uppdatera">
                 
-                <a href="manage-users.php" class="btn btn-secondary cancel-btn">Cancel</a>
+                <a href="manage-users.php" class="btn btn-secondary cancel-btn">Avbryt</a>
             </div>
         </form>
     </div>

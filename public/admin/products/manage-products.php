@@ -51,22 +51,28 @@
 
 <?php include('../../layout/admin-header.php')?>
 
-<main class= "manage-books-container">
+<main class= "manage-container">
+    <a href="../../users/my-page.php" style="color:white; text-decoration:none">
+        <button class="btn btn-secondary px-4 mt-3 mb-3"><i class="fa-solid fa-arrow-left">
+            </i>&nbsp; Tillbaka till mina sidor 
+        </button>
+    </a>
+    
     <h1>Manage products</h1>
-
+    
     <div id="messages"></div>
 
-    <a href="add-product.php" id="add-product-btn">Add new book +</a>
+    <a href="add-product.php" class="add-link">Add new book +</a>
 
     <form id="search-form" class="d-flex" role="search" method="post" >
-        <select class="form-select" name="searchBy">
+        <select class="form-select w-25" name="searchBy">
             <option value="" selected hidden>Sök efter:</option>
             <option value="title">Titel</option>
             <option value="author">Författare</option>
             <option value="id">ID</option>
         </select>
         <input class="form-control me-2" id="search-bar" name="search-result" type="search" placeholder="Sök..." aria-label="Search">
-        <input type="submit" class="btn" id="search-submit" name="searchSubmitBtn" value="Sök">
+        <input type="submit" class="btn btn-primary px-4" id="search-submit" name="searchSubmitBtn" value="Sök">
     </form>
 
     <table id="books-tbl">
@@ -102,7 +108,7 @@
                         </form>
 
                         <form class="delete-book-form" method="POST">
-                            <input type="hidden" name="bookId" value="<?= htmlentities($book['id']) ?>">
+                            <input type="hidden" name="bookId" value="<?=htmlentities($book['id'])?>">
                             <input type="submit" name="deleteBookBtn" value="Delete">
                         </form>
                     </td>

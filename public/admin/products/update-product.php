@@ -79,18 +79,18 @@ if (isset($_POST['updateProductBtn'])) {
         redirect("manage-products.php");
     }
 }    
-    $book = $booksDbHandler -> fetchSpecificBook($_GET['bookId'])
+    $book = $booksDbHandler -> fetchSpecificBook($_POST['bookId'])
 ?>
 
 <?php include('../../layout/admin-header.php')?>
 
-    <div class="container mt-3">
-        <h1 class="center">Update Product</h1>
+    <div class="container w-50 mt-5 mb-5">
+        <h2>Update Product</h2>
         <br>
 
         <?= $message ?>
         
-        <img src=<?=$book['img_url']?> class="mb-3 product-img-form" height= "400px">
+        <img src="<?= $book['img_url']?>" class="mb-3 product-img" height= "400px">
 
         <div class="form-background">
         <form class="input-form" action="" method="post" enctype="multipart/form-data">
@@ -145,9 +145,9 @@ if (isset($_POST['updateProductBtn'])) {
             </div>
 
             <div class="d-grid gap-3 col-6 mx-auto mt-4 ">
-                <input type="submit" class="btn" name="updateProductBtn" value="Update">
+                <input type="submit" class="btn btn-primary" name="updateProductBtn" value="Uppdatera">
                 
-                <a href="manage-products.php" class="btn btn-secondary cancel-btn">Cancel</a>
+                <a href="manage-products.php" class="btn btn-secondary cancel-btn">Avbryt</a>
             </div>
         </form>
         </div>

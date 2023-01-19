@@ -1,0 +1,16 @@
+*,html{
+    padding: 0px;
+    margin: 0px;
+    box-sizing: border-box;
+}
+
+header {
+    background-color: #777799;
+    height: 100px;
+    color: white;
+    text-align: center;
+}
+header img{
+    height: 100px;
+}
+

@@ -49,8 +49,8 @@
 
 <?php include('../../layout/admin-header.php')?>
 
-    <div class="container mt-3">
-        <h1 class="center" >Add new user</h1>
+    <div class="container w-50 mt-5 mb-5">
+        <h2>Add new user</h2>
         <br>
 
         <?= $message ?>
@@ -100,9 +100,8 @@
             </div>
 
                 <div class="d-grid gap-3 col-6 mx-auto mt-4">
-                    <input type="submit" class="btn" name="addUserBtn" value="Add">
-
-                    <a href="manage-products.php" class="btn btn-secondary cancel-btn">Cancel</a>
+                    <input type="submit" class="btn btn-primary" name="addUserBtn" value="Lägg till">
+                    <a href="manage-users.php" class="btn btn-secondary cancel-btn">Avbryt</a>
                 </div>
             </form>
     </div>

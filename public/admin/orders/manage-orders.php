@@ -18,15 +18,21 @@
 
 <?php include('../../layout/admin-header.php')?>
 
-<main class= "manage-users-container">
+<main class= "manage-container orders-container">
 
+    <a href="../../users/my-page.php" style="color:white; text-decoration:none">
+        <button class="btn btn-secondary px-4 mt-3 mb-3"><i class="fa-solid fa-arrow-left">
+            </i>&nbsp; Tillbaka till mina sidor 
+        </button>
+    </a>
+    
     <h1>Manage orders</h1>
 
     <div id="messages"></div>
 
     <form id="search-form" class="d-flex" role="search" method="post" >
         <input class="form-control me-2" id="search-bar" name="search-result" type="search" placeholder="Search by id..." aria-label="Search">
-        <input type="submit" class="btn" id="search-submit" name="searchOrderBtn" >
+        <input type="submit" class="btn btn-primary px-4" id="search-submit" name="searchOrderBtn" value="Sök">
     </form>
 
     <table id="orders-tbl">
@@ -80,7 +86,7 @@
                 </table>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Stäng</button>
             </div>
             </div>
         </div>
