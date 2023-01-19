@@ -2,10 +2,10 @@
 require('../../src/config.php');
 $pageTitle = 'Checkout';
 
-
-if(isset($_SESSION['email'])){
+if (isset($_SESSION['email'])){
     $activeUser = $usersDbHandler-> fetchUserByEmail($_SESSION['email']);
 } 
+
 ?>
 
 <?php include('../layout/header.php'); ?>
@@ -16,6 +16,9 @@ if(isset($_SESSION['email'])){
         
         <div class="inner-container">
             <section class="checkout-item-list">
+            <?php if($_SESSION['cartItems'] == []){?>
+                <h3>Din varukorg är tom.</h3>
+            <?php }?>
                 <ul>
                     <?php foreach ($_SESSION['cartItems'] as $productId => $cartItem) : ?>
                         <li>
@@ -46,19 +49,23 @@ if(isset($_SESSION['email'])){
                         </li>
                     <?php endforeach; ?>
                 </ul>
+                <div class="total-section-checkout">
+                    <p>Total:</p>
+                    <p><span class="cart-price"><?=$cartTotalSum ?></span> SEK</p>
+                </div>
             </section>
 
             <section class="checkout-sidebar">
-                <div class="total-section">
-                    <p>Total</p>
-                    <p><span class="cart-price"><?=$cartTotalSum ?></span> SEK</p>
-                </div>
-
+                <h5 style="margin-bottom:20px;">Kunduppgifter</h5>
                 <hr>
-
                 <?php if (isset($_GET['infoRequired'])){ ?>
                     <div class="alert alert-danger" role="alert" style="margin-bottom:30px">
                         Var vänligen och fyll i alla fält.
+                    </div>
+                <?php } ?>
+                <?php if (isset($_GET['wrongPassword'])){ ?>
+                    <div class="alert alert-danger" role="alert" style="margin-bottom:30px">
+                        Fel lösenord
                     </div>
                 <?php } ?>
 
@@ -66,43 +73,46 @@ if(isset($_SESSION['email'])){
                     <input type="hidden" name="cartTotalSum" value="<?= $cartTotalSum ?>">
                     <div class="form-row">
                         <div class="form-group col-md-6">
-                            <label for="first-name">Förnamn:</label>
+                            <label for="fname">Förnamn:</label>
                             <input type="text" class="form-control" name="fname" value="<?=htmlentities($activeUser['first_name'])?>">
                         </div>
                         <div class="form-group col-md-6">
-                            <label for="last-name">Efternamn:</label>
+                            <label for="lname">Efternamn:</label>
                             <input type="text" class="form-control" name="lname" value="<?=htmlentities($activeUser['last_name'])?>">
                         </div>
                     </div>
                     <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label for="input-email">E-post:</label>
+                        <div class="form-group col-xl">
+                            <label for="email">E-post:</label>
                             <input type="email" class="form-control" name="email" value="<?=htmlentities($activeUser['email'])?>">
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label for="input-password">Lösenord:</label>
-                            <input type="password" class="form-control" name="password" value="<?=htmlentities($activeUser['password'])?>">
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-xl">
-                            <label for="input-adress">Address:</label>
+                            <label for="password">Lösenord:</label>
+                            <input type="password" class="form-control" name="password" value="">
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group col-xl">
+                            <label for="street">Address:</label>
                             <input type="text" class="form-control" name="street" value="<?=htmlentities($activeUser['street'])?>">
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-6">
-                            <label for="input-zip">Postnummer:</label>
+                            <label for="postal-code">Postnummer:</label>
                             <input type="text" class="form-control" name="postal-code" value="<?=htmlentities($activeUser['postal_code'])?>">
                         </div>
                         <div class="form-group col-md-6">
-                            <label for="input-city">Stad:</label>
+                            <label for="city">Stad:</label>
                             <input type="text" class="form-control" name="city" value="<?=htmlentities($activeUser['city'])?>">
                         </div>
                     </div>
                     
                     <div class="form-row">
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-xl">
                             <label for="phone">Telefonnummer:</label>
                             <input type="text" class="form-control" name="phone" value="<?=htmlentities($activeUser['phone'])?>">
                         </div>

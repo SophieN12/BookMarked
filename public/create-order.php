@@ -16,15 +16,20 @@ require('../src/config.php');
         if (empty($firstName) || empty($lastName) || empty($email) || empty($password) || empty($phone) || empty($street) || 
             empty($postal_code) || empty($city)) { 
             redirect("products/checkout.php?infoRequired");
+            exit;
         } 
-
-        // FETCHING USER IF EXISTS
-
+        
         $user = $usersDbHandler-> fetchUserByEmail($email);
         $userId = isset($user['id']) ? $user['id'] : null;
 
-        // CREATING NEW USER IF FIRST TIME BUYER
 
+        // CHECKING IF BUYER ENTERED CORRECT PASSWORD
+        if ($user && !password_verify($password, $user['password'])){
+            redirect("products/checkout.php?wrongPassword");
+            exit;
+        }
+        
+        // CREATING NEW USER IF FIRST TIME BUYER
         if (empty($user)) {
             $sql = "
                     INSERT INTO users (first_name, last_name, email, password, phone, street, postal_code, city, img_url) 

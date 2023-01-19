@@ -81,4 +81,15 @@ class OrdersDbHandler {
         $stmt->bindParam(':orderId', $orderId);
         return $stmt->execute();
     }
+    
+    public function deleteOrderItems($orderId) {
+        $sql = "
+            DELETE FROM order_items
+            WHERE order_id = :orderId
+        ";
+
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindParam(':orderId', $orderId);
+        return $stmt->execute();
+    }
 }

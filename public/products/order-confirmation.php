@@ -22,19 +22,37 @@
 
 <body>
     <div class="container">
-
-        <img src="../" alt="">
-        <h1>Tack för din order!</h1>
-        <p>Din beställning är mottagen och behandlas. Du kommer att motta ett mejl med beställningsinformation.</p>
+        <div class="order-confirmation-text">
+            <h1>Tack för din order!</h1>
+            <p>Din beställning är mottagen och behandlas. Du kommer att motta ett mejl med beställningsinformation.</p>
+        </div>
 
         <section class="order-details">
-            <h3>Orderdetaljer</h3>
+            <h4>Orderdetaljer</h4>
             <hr>
-            <p>Ordernummer: <?=$order_details['id']?></p>
-            <p>Total: <?=$order_details['total_price']?> SEK</p>
-            <p>Beställningsdatum: <?=substr($order_details['create_date'], 0, 10)?></p>
-            <p>Betalningssätt: Faktura</p>
-            <p>Email: <?= $_GET['email']?></p>
+            <div>
+                <div>
+                    <h6>Ordernummer:</h6>
+                    <p> <?=$order_details['id']?></p>
+                </div>
+                <div>
+                    <h6>E-post:</h6>
+                    <p><?= $_GET['email']?></p>
+                </div>
+                
+                <div>
+                    <h6>Beställningsdatum: </h6>
+                    <p><?=substr($order_details['create_date'], 0, 10)?></p>
+                </div>
+                <div>
+                    <h6>Betalningssätt: </h6>
+                    <p>Faktura</p>
+                </div>
+                <div>
+                    <h6>Total: </h6>
+                    <p><?=$order_details['total_price']?> SEK</p>
+                </div>
+            </div>
         </section>
     </div>
 </body>
