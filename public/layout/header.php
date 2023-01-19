@@ -1,36 +1,29 @@
 <?php 
-// require('../../src/config.php');
+    $errorMessages = "";
+    $email = "";
 
-if (isset($_POST["submitSearch"])){
-    $searchResult =  trim($_POST['search-result']);
-    header("location: ../products/products.php?search=". trim($_POST['search-result']));
-}
-
-$errorMessages = "";
-$successMessage = "";
-$email = "";
-
-if (isset($_POST['loginBtn'])) {
-    $email = $_POST['email'];
-    $password = $_POST['password'];
-
-    $sql = "SELECT * FROM users 
-            WHERE email = :email";
-
-    $stmt = $pdo->prepare($sql);
-    $stmt->bindParam(':email', $email);
-    $stmt->execute();
-
-    $loginUser = $stmt->fetch();    
-
-    if ($loginUser && password_verify($password, $loginUser['password'])) {
-        $_SESSION['id'] = $loginUser['id'];
-        $_SESSION['email'] = $loginUser['email'];
-        $_SESSION['img'] = $loginUser['img_url'];
-    } else {
-        $errorMessages = "The username or password you entered is incorrect";
+    if (isset($_POST["submitSearch"])){
+        $searchResult =  trim($_POST['search-result']);
+        redirect("../products/products.php?search=". trim($_POST['search-result']));
     }
-}
+
+    if (isset($_POST['loginBtn'])) {
+        $email = $_POST['email'];
+        $password = $_POST['password'];
+
+        $loginUser = $usersDbHandler -> fetchUserByEmail($email);
+    
+        if (!$loginUser) {
+            redirect("?emailDontExists");
+        } else if ($loginUser && password_verify($password, $loginUser['password'])){
+            $_SESSION['id'] = $loginUser['id'];
+            $_SESSION['email'] = $loginUser['email'];
+            $_SESSION['img'] = $loginUser['img_url'];
+            redirect("?loggedIn");
+        } else {
+            redirect("?wrongPassword");
+        }
+    }
 ?>
 
 <!DOCTYPE html>
@@ -40,15 +33,14 @@ if (isset($_POST['loginBtn'])) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?=$pageTitle?></title>
-    
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://kit.fontawesome.com/7057239743.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="../css/header.css">
     <link rel="stylesheet" href="../css/footer.css">
-    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/checkout.css">
+    <link rel="stylesheet" href="../css/users.css">
     <link rel="stylesheet" href="../css/products.css">
-
 </head>
 
 <body>
@@ -71,7 +63,7 @@ if (isset($_POST['loginBtn'])) {
                         <img src="../img/<?php echo $_SESSION['img']?>">
                     </a>
                     <?php } else { ?>
-                        <img src="../img/header-img/owl.png" data-toggle="modal" data-target="#loginModal" alt="">
+                        <img src="../img/header-img/avatar-icon.png" data-toggle="modal" data-target="#loginModal" alt="">
                         <?php }
             ?>
 
@@ -89,7 +81,7 @@ if (isset($_POST['loginBtn'])) {
                     </div>
 
                     <div class="modal-body">
-                        <div id="loginMessages"></div>
+                        <p id="loginMessages"></p>
                         <form id="login-form" method="POST">
                             <div class="form-group">
                                 <label for="email">E-post:</label>
@@ -122,8 +114,7 @@ if (isset($_POST['loginBtn'])) {
                     </div>
 
                     <div class="modal-body">
-                        <p id="success"><?=$successMessage?></p>
-                        <p id="error"><?=$errorMessages?></p>
+                        <p id="registerMessages"></p>
                         <form id="create-account-form" action="../users/create-user.php" method="POST">
                             <div class="form-group">
                                 <label for="register-fname">Förnamn:</label>
@@ -159,18 +150,18 @@ if (isset($_POST['loginBtn'])) {
         </div> 
     </header>
 
+    <?php if(isset($_GET['success'])){?>
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <?php echo $_GET['message']?>
+            <button type="button" class="close alert-close-btn" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    <?php } ?>
+
     <?php if (isset($_GET['logout'])){ ?>
             <div class="alert alert-info alert-dismissible fade show" role="alert">
                 Du är nu<strong> utloggad.</strong>
-                <button type="button" class="close alert-close-btn" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-    <?php } ?>
-
-    <?php if (isset($_GET['userCreated'])){ ?>
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                Ditt konto har skapats.
                 <button type="button" class="close alert-close-btn" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -181,6 +172,3 @@ if (isset($_POST['loginBtn'])) {
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="../users/js/login.js"></script>
-</body>
-
-</html>

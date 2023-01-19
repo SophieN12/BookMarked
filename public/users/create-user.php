@@ -15,7 +15,7 @@
         if (empty($_POST['register-fname'])) {
             $errorMessages .= "Please enter your first name<br>";
         } else {
-            $first_name = trim($_POST['register-fname']);
+            $first_name = ucfirst(trim($_POST['register-fname']));
             if(preg_match('/[\^£$%&"*()}{@#~?><>,|=_+¬]/', $_POST['register-fname'])) {
                 $errorMessages .= "Special characters in 'First name' are not allowed, please try again<br>";
             };
@@ -59,18 +59,21 @@
                 $usersDbHandler->createAccount (
                     $first_name, $last_name, $email, $password);
                 
-                $successMessage = "User succesfully created!";
-                header('Location: ' . $_SERVER['HTTP_REFERER']. '?userCreated');
+                $successMessage = "Ditt konto har skapats!";
+                header('Location: ' . $_SERVER['HTTP_REFERER']. '?message=' . $successMessage . '&success');
                 exit;
-                // redirect("../products/index.php?userCreated");
                 
             } catch (\PDOException $e ){
                 if ((int) $e->getCode() === 23000) {
-                    $errorMessages .= "Email address already registred, please enter a different email";
+                    $errorMessages .= "E-postadressen du har angivit är redan registrerad.";
+                    header('Location: ' . $_SERVER['HTTP_REFERER']. '?error&message=' . $errorMessages);
                 } else {
                     throw new \PDOException($e->getMessage(), (int) $e->getCode());
                 }
             }
+        }
+        if (!empty($errorMessages)){
+            header('Location: ' . $_SERVER['HTTP_REFERER']. '?error&message=' . $errorMessages);
         }
     }
 
