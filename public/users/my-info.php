@@ -1,6 +1,5 @@
 <?php 
     require('../../src/config.php');
-    require('../../src/app/common_functions.php');
 
     $first_name         = "";
     $last_name          = "";
@@ -13,12 +12,7 @@
     $updateMessages      = "";
     $errorMessages      = "";
 
-                        
-
     if(isset($_POST['saveChangesBtn'])){
-        // $first_name         = trim($_POST['fname']);
-        // $last_name          = trim($_POST['lname']);
-        // $password           = trim($_POST['password']);
         $phone              = trim($_POST['phone']);
         $street             = trim($_POST['street']);
         $postal_code        = trim($_POST['postal_code']);
@@ -34,9 +28,6 @@
         }
 
         if ($emptyFieldsAmount != 0){
-            // $errorMessages .= generateErrorMessageForEmptyField($first_name, "Förnamn");
-            // $errorMessages .= generateErrorMessageForEmptyField($last_name, "Efternamn");
-            // $errorMessages .= generateErrorMessageForEmptyField($password, "Lösenord");
             $errorMessages .= generateErrorMessageForEmptyField($phone, "Telefonnummer");
             $errorMessages .= generateErrorMessageForEmptyField($street, "Address");
             $errorMessages .= generateErrorMessageForEmptyField($postal_code, "Postnumemr");
@@ -82,30 +73,43 @@
 
 <?php include('../layout/header.php');?>
 
-<main>
+<main id="my-info-section">
     <?=$updateMessages?>
-    
+    <a href="my-page.php" class="btn btn-secondary" style="position:absolute; top:120px; left: 30px;"><i class="fa-solid fa-arrow-left"></i>  Tillbaka till mina sidor</a>
     <h1>Mina uppgifter</h1>
 
     <form id="my-info-form" method="POST">
-        <label for="fname">Förnamn:</label>
-        <input type="text" name="fname" value= "<?=htmlentities($userInfo['first_name'])?>" class="input-readonly" readonly>
-        <label for="lname">Efternamn:</label>
-        <input type="text" name="lname" value= "<?= htmlentities($userInfo['last_name'])?>" class="input-readonly" readonly>
-        <label for="email">E-post:</label>
-        <input type="email" name="email" value= "<?=htmlentities($userInfo['email'])?>" class="input-readonly" size="30" readonly>
-        <label for="phone">Mobilnummer:</label>
-        <input type="text" name="phone" value= "<?=htmlentities($userInfo['phone'])?>">
-        <label for="street">Address:</label>
-        <input type="text" name="street" value= "<?=htmlentities($userInfo['street'])?>">
-        <label for="postal_code">Postnummer:</label>
-        <input type="text" name="postal_code" value= "<?=htmlentities($userInfo['postal_code'])?>">
-        <label for="city">Stad:</label>
-        <input type="text" name="city" value= "<?=htmlentities($userInfo['city'])?>">
-        <button>Change password</button>
+        <div class="form-group">
+            <label for="fname">Förnamn:</label>
+            <input type="text" class="form-control" name="fname" value= "<?=htmlentities($userInfo['first_name'])?>" class="input-readonly" readonly>
+        </div>
+        <div class="form-group">
+            <label for="lname">Efternamn:</label>
+            <input type="text" class="form-control col" name="lname" value= "<?= htmlentities($userInfo['last_name'])?>" class="input-readonly" readonly>
+        </div>
+        <div class="form-group">
+            <label for="email">E-post:</label>
+            <input type="email" class="form-control" name="email" value= "<?=htmlentities($userInfo['email'])?>" class="input-readonly" size="30" readonly>
+        </div>
+        <div class="form-group">
+            <label for="phone">Telefonnummer:</label>
+            <input type="text" class="form-control" name="phone" value= "<?=htmlentities($userInfo['phone'])?>">
+        </div>
+        <div class="form-group">
+            <label for="street">Adress:</label>
+            <input type="text" class="form-control" name="street" value= "<?=htmlentities($userInfo['street'])?>">
+        </div>
+        <div class="form-group">
+            <label for="postal_code">Postnummer:</label>
+            <input type="text" class="form-control"name="postal_code" value= "<?=htmlentities($userInfo['postal_code'])?>">
+        </div>
+        <div class="form-group">
+            <label for="city">Stad:</label>
+            <input type="text" class="form-control" name="city" value= "<?=htmlentities($userInfo['city'])?>">
+        </div>
         <p> Medlemskap skapad: <?=substr($userInfo['create_date'], 0, 10)?></p>
-        <button type="submit" name="saveChangesBtn">Spara ändringar</button>
-        <a href="my-page.php" class="button">Tillbaka</a>
+        <button type="submit" class="btn btn-primary" name="saveChangesBtn">Spara ändringar</button>
+        <a href="my-page.php" class= "btn btn-secondary">Tillbaka</a>
     </form>
 
 </main>

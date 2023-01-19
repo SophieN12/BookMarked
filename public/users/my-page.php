@@ -19,11 +19,22 @@ if (!isset($_SESSION['email'])){
     $subheading = "Välkommen " . $loggedInUser['first_name'] . " " . $loggedInUser['last_name'] .  "!";
 }
 
+if (isset($_POST['delete-account'])){
+    $usersDbHandler -> deleteUser($_SESSION['id']);
+    $_SESSION = [];
+    session_destroy();
+
+    redirect('../products/index.php');
+}
+
 ?>
 
 <?php include('../layout/header.php')?>
 
 <main id="profile-page-section">
+    <?php if (isset($_SESSION['email'])) { ?>
+        <button id="logoutBtn" type="button" class="btn btn-secondary" onClick="location.href='logout.php'">Logga ut &nbsp;<i class="fa-solid fa-right-from-bracket"></i></button>
+    <?php }?>
     <section class="profile-header">
         <h3><?=$subheading?> </h3>
         <img src="../img/<?=$loggedInUser['img_url']?>" id="user-profile-pic" alt="avatar-pic">
@@ -64,31 +75,34 @@ if (!isset($_SESSION['email'])){
                 </section>
             </a>
         
-            <a href="my-favorites.php">
-                <section class="profile-box">
-                    <h3>Favoriter</h3>
-                </section>
-            </a>
-            
             <a href="my-orderhistory.php">
                 <section class="profile-box">                
                     <h3>Orderhistorik</h3>
                 </section>
             </a>
                 
-            <a href="my-settings.php">
-                <section class="profile-box">
-                    <h3>Inställningar</h3>
-                </section>
-            </a>
+            <form id="delete-form" method="POST">
+                <input type="hidden" name="delete-account">
+            </form>
+            <button id="deleteAccBtn" onclick="confirmAction()">RADERA MITT KONTO &nbsp;<i class="fa-solid fa-trash-can"></i></button>
         </div>
     <?php } ?>
-
 </main>
 
-<?php if (isset($_SESSION['email'])) { ?>
-    <input id="logoutBtn" type="button" onClick="location.href='logout.php'" value="Logout">
-<?php }?>
+<script>
+    const deleteForm = document.getElementById('delete-form');
+
+    const confirmAction = () => {
+        const response = confirm("Är du säker på att du vill radera ditt konto?");
+
+        if (response) {
+            deleteForm.submit();
+        } else {
+            alert("Handling avbruten");
+        }
+    }
+</script>
+
 
 <?php include('../layout/footer.php')?>
 
