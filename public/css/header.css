@@ -1,12 +1,5 @@
 @import "general.css";
 
-/* *,html{
-    padding: 0px;
-    margin: 0px;
-    box-sizing: border-box;
-    scroll-behavior: smooth;
-} */
-
 header{
     background-color: #777799;
     display: grid;
@@ -46,9 +39,6 @@ header{
 
 #search-form{
     width: 500px;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
 }
 
 #search-bar{
@@ -142,3 +132,10 @@ form input[type="int"]{
     color: var(--white);
     background-color: var(--hover-color);
 }
+
+@media only screen and (min-width: 1800px) {
+    #products-display {
+        column-gap: 100px;
+    }
+}
+

@@ -63,7 +63,7 @@ if (isset($_SESSION['email'])){
                         Var vänligen och fyll i alla fält.
                     </div>
                 <?php } ?>
-                <?php if (isset($_GET['wrongPassword'])){ ?>
+                <?php if (isset($_GET['wrongPasswordCheckout'])){ ?>
                     <div class="alert alert-danger" role="alert" style="margin-bottom:30px">
                         Fel lösenord
                     </div>

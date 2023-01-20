@@ -1,6 +1,7 @@
 <?php 
 require('../../src/config.php');
 $subheading = "";
+$pageTitle = "Mina sidor";
 
 if (!isset($_SESSION['email'])){
     $subheading = "Du är inte inloggad. Var god att logga in.";

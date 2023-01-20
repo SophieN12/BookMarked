@@ -5,14 +5,16 @@ footer{
 
 #footer-section {
     height: 220px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    display: flex;
+    justify-content: center;
+    column-gap: 200px;
     color: var(--white);
+    margin:0 100px;
 }
 
 .footer-links {
-    margin: 40px auto auto 120px;
-    column-gap: 120px;
+    margin-top: 40px;
+    column-gap: 7em;
     display: flex;
 }
 
@@ -30,6 +32,7 @@ footer{
 
 .footer-subscribe {
     margin-top: 40px;
+    width: 40%;
 }
 
 #subscribe-btn{
@@ -39,7 +42,7 @@ footer{
 }
 
 .subscribe-input {
-    width: 60%;
+    width: 90%;
     border-radius: 0px 0.25em 0.25em 0px;
     box-shadow: 2px 2px 5px rgb(44, 44, 44);
 }

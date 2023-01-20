@@ -50,9 +50,9 @@
         </a>
 
         <div id="search-div">
-            <form id="search-form" class="d-flex" role="search" method="POST">
-				<input class="form-control me-2" id="search-bar" name="search-result" type="search" placeholder="Search after your next read..." aria-label="Search">
-				<input type="submit" class="btn" id="submit-search" name="submitSearch" value="Search">
+            <form id="search-form" class="d-flex " role="search" method="POST">
+				<input class="form-control me-2" id="search-bar" name="search-result" type="search" placeholder="Sök efter din nästa läsupplevelse..." aria-label="Search">
+				<input type="submit" class="btn px-3" id="submit-search" name="submitSearch" value="Sök">
 			</form>
         </div>
         

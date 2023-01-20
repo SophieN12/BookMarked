@@ -25,7 +25,7 @@ require('../src/config.php');
 
         // CHECKING IF BUYER ENTERED CORRECT PASSWORD
         if ($user && !password_verify($password, $user['password'])){
-            redirect("products/checkout.php?wrongPassword");
+            redirect("products/checkout.php?wrongPasswordCheckout");
             exit;
         }
         

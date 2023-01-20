@@ -1,4 +1,4 @@
-#manage-profile-div{
+/* #manage-profile-div{
     margin: 0 auto;
     display: flex;
     flex-flow: row wrap;
@@ -6,7 +6,24 @@
     justify-content: center;
     align-items: center;
     gap: 30px;
+} */
+
+#manage-profile-div{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-items: center;
+    margin: 0 100px;
 }
+
+#manage-admin-div{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    justify-items: center;
+    row-gap: 30px;
+    margin: 0 100px;
+}
+
 
 #profile-page-section{
     display: flex;
@@ -33,12 +50,14 @@
 .profile-box{
     border: 1px solid grey;
     min-width: 430px;
+    width: 45%;
     min-height: 150px;
     border-radius: 10px;
     cursor: pointer;
     background-color: var(--main-color);
     position: relative;
 }
+
 .profile-box h3 {
     text-align: center;
     position: absolute;
@@ -95,7 +114,35 @@ td, th, tr{
 /* My-settings styling */
 
 #deleteAccBtn{
-    margin: 30px auto;
+    margin: 10px auto 30px;
     background-color: rgb(176, 58, 58);
     border-radius: 10px;
+}
+
+/* Reponsivity */
+
+@media only screen and (min-width: 1800px) {
+    #manage-profile-div{
+        margin: 0 300px;
+    }
+}
+
+@media only screen and (max-width: 1300px) {
+    #manage-profile-div{
+        margin: 0;
+    } .profile-box{
+        min-width: 350px;
+    }
+}
+
+@media only screen and (max-width: 940px) {
+    .profile-box{
+        min-width: 250px;
+    }
+}
+
+@media only screen and (max-width: 720px) {
+    .profile-box{
+        min-width: 200px;
+    }
 }

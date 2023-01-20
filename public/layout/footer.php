@@ -1,6 +1,6 @@
     <footer>
         <main id="footer-section">
-            <section class="footer-links">
+            <section class="footer-links d-flex">
                 <ul>
                     <h5>Om oss</h5>
                     <li><a href="#">Länk</a></li>
